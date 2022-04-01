@@ -1,18 +1,21 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
+import { addCart } from "../redux/action";
+import { useDispatch } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const Products = () => {
   const [data, setData] = useState([]);
-  const [vegPizza, setVegPizza] = useState([]);
-  const productBelow400 = [];
-  const [nonVegPizza, setNonVegPizza] = useState([]);
-  const [below400, setBelow400] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   let componentMounted = true;
+
+  const addProduct = (product) => {
+    dispatch(addCart(product));
+  };
 
   useEffect(() => {
     const getProducts = async () => {
@@ -61,26 +64,21 @@ const Products = () => {
     const updatedList = data.filter((item) => item.category === cat);
     setFilter(updatedList);
   };
-  const productsBelow400 = (b400) => {
-    console.log("Below 400", b400);
-
-    if (b400 <= 400) {
-      return productBelow400.push(b400);
-    } else {
-      return 0;
-    }
+  const productIsVeg = (isVeg) => {
+    console.log(isVeg);
+    const updatedList = data.filter((item) => item.isVeg === isVeg);
+    console.log(updatedList);
+    setFilter(updatedList);
   };
+  const productsBelow400 = (x, y) => {
+    console.log(x, y);
+    const updatedList = data.filter(
+      (item) => x <= item.price && item.price <= y
+    );
 
-  // const vegFilter = (vegPizza) => {
-  //   data.filter((item) => {
-  //     if (vegPizza.isVeg === true) {
-  //       return vegProducts.push(item);
-  //     } else {
-  //       return 0;
-  //     }
-  //   });
-  //   let vProducts = [...new Set(vegProducts)];
-  // };
+    console.log(updatedList);
+    setFilter(updatedList);
+  };
 
   const ShowProducts = () => {
     return (
@@ -97,11 +95,7 @@ const Products = () => {
           <button
             className="btn btn-outline-dark me-2"
             onClick={() => {
-              if (filterProduct("isVeg") === true) {
-                return console.log("first");
-              } else {
-                return console.log("no return");
-              }
+              productIsVeg(true);
             }}
           >
             Veg Pizzas
@@ -109,7 +103,7 @@ const Products = () => {
           <button
             className="btn btn-outline-dark me-2"
             onClick={() => {
-              filterProduct("women's clothing");
+              productIsVeg(false);
             }}
           >
             Non-Veg Pizzas
@@ -117,7 +111,7 @@ const Products = () => {
           <button
             className="btn btn-outline-dark me-2"
             onClick={() => {
-              productsBelow400("price");
+              productsBelow400(200, 400);
             }}
           >
             ₹200 - ₹400
@@ -125,7 +119,7 @@ const Products = () => {
           <button
             className="btn btn-outline-dark me-2"
             onClick={() => {
-              filterProduct("electronics");
+              productsBelow400(400, 500);
             }}
           >
             ₹400 - ₹500
@@ -143,14 +137,26 @@ const Products = () => {
                     height="250px"
                   />
                   <div className="card-body">
-                    <h5 className="card-title mb-0">{product.name}...</h5>
+                    <h5 className="card-title mb-0">
+                      {product.name}
+                      <div className="ml-2">
+                        {product.isVeg && (
+                          <span className="badge bg-success">Veg</span>
+                        )}
+                        {!product.isVeg && (
+                          <span className="badge bg-danger">Non-Veg</span>
+                        )}
+                      </div>
+                    </h5>
+                    <p>{product.description}</p>
                     <p className="card-text lead fw-bold">₹{product.price}</p>
-                    <a
-                      href={`/products/${product.id}`}
-                      className="btn btn-outline-dark"
+
+                    <button
+                      className="btn btn-outline-dark px-4 py-2"
+                      onClick={() => addProduct(product)}
                     >
-                      Buy Now
-                    </a>
+                      Add to Cart
+                    </button>
                   </div>
                 </div>
               </div>

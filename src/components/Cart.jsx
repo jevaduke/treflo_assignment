@@ -24,15 +24,166 @@ const Cart = () => {
           <div className="row justify-content-center">
             <div className="col-md-4">
               <img
-                src={cartItem.image}
-                alt={cartItem.title}
-                height="200px"
-                width="180px"
+                src={cartItem.img_url}
+                alt={cartItem.name}
+                height="300px"
+                width="280px"
               />
             </div>
             <div className="col-md-4">
-              <h3>{cartItem.title}</h3>
-              <p className="lead fw-bold">${cartItem.price}</p>
+              <h3>
+                {cartItem.name}
+                <div className="ml-2">
+                  {cartItem.isVeg && (
+                    <span className="badge bg-success">Veg</span>
+                  )}
+                  {!cartItem.isVeg && (
+                    <span className="badge bg-danger">Non-Veg</span>
+                  )}
+                </div>
+              </h3>
+              <p className="lead fw-bold">{cartItem.description}</p>
+              <div class="row">
+                <div class="col">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Regular
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault2"
+                      checked
+                    />
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Medium
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault2"
+                      checked
+                    />
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      Large
+                    </label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="dropdown">
+                    <a
+                      class="btn btn-warning dropdown-toggle btn-group"
+                      href="#"
+                      role="button group"
+                      id="dropdownMenuLink"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      aria-label="Basic checkbox toggle button group"
+                    >
+                      choose topping(s)
+                    </a>
+
+                    <ul
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuLink"
+                    >
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="btncheck1"
+                            autocomplete="off"
+                          />
+                          <label
+                            class="btn btn-outline-primary"
+                            for="btncheck1"
+                          >
+                            Red Pepper
+                          </label>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="btncheck2"
+                            autocomplete="off"
+                          />
+                          <label
+                            class="btn btn-outline-primary"
+                            for="btncheck2"
+                          >
+                            Onion
+                          </label>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="btncheck3"
+                            autocomplete="off"
+                          />
+                          <label
+                            class="btn btn-outline-primary"
+                            for="btncheck3"
+                          >
+                            Grilled Mushroom
+                          </label>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="btncheck4"
+                            autocomplete="off"
+                          />
+                          <label
+                            class="btn btn-outline-primary"
+                            for="btncheck4"
+                          >
+                            Extra Cheese
+                          </label>
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          <input
+                            type="checkbox"
+                            class="btn-check"
+                            id="btncheck5"
+                            autocomplete="off"
+                          />
+                          <label
+                            class="btn btn-outline-primary"
+                            for="btncheck5"
+                          >
+                            Black Olive
+                          </label>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <p className="lead fw-bold">₹{cartItem.price}</p>
             </div>
           </div>
         </div>
